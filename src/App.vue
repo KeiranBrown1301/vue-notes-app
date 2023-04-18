@@ -3,6 +3,22 @@ import { ref } from "vue";
 
 const showModal = ref(false);
 const newNote = ref("");
+const notes = ref([]);
+
+function getRandomColor() {
+  return "hsl(" + Math.random() * 360 + ", 100%, 75%)";
+}
+
+const addNote = () => {
+  notes.value.push({
+    text: newNote.value,
+    date: new Date(),
+    id: Math.floor(Math.random() * 1000000),
+    backgroundColor: getRandomColor(),
+  });
+  showModal.value = false;
+  newNote.value = "";
+};
 </script>
 
 <template>
@@ -16,7 +32,7 @@ const newNote = ref("");
           cols="30"
           rows="10"
         ></textarea>
-        <button>ADD NOTE</button>
+        <button @click="addNote">ADD NOTE</button>
         <button @click="showModal = false" class="close">CLOSE</button>
       </div>
     </div>
