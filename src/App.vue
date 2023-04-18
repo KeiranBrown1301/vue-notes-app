@@ -3,6 +3,7 @@ import { ref } from "vue";
 
 const showModal = ref(false);
 const newNote = ref("");
+const errorMessage = ref("");
 const notes = ref([]);
 
 function getRandomColor() {
@@ -10,6 +11,9 @@ function getRandomColor() {
 }
 
 const addNote = () => {
+  if (newNote.value.length < 10) {
+    return (errorMessage.value = "Note needs to be 10 characters or more.");
+  }
   notes.value.push({
     text: newNote.value,
     date: new Date(),
@@ -18,6 +22,7 @@ const addNote = () => {
   });
   showModal.value = false;
   newNote.value = "";
+  errorMessage.value = "";
 };
 </script>
 
@@ -26,12 +31,13 @@ const addNote = () => {
     <div v-if="showModal" class="overlay">
       <div class="modal">
         <textarea
-          v-model="newNote"
+          v-model.trim="newNote"
           name="note"
           id="note"
           cols="30"
           rows="10"
         ></textarea>
+        <p v-if="errorMessage">{{ errorMessage }}</p>
         <button @click="addNote">ADD NOTE</button>
         <button @click="showModal = false" class="close">CLOSE</button>
       </div>
@@ -44,6 +50,7 @@ const addNote = () => {
       <div class="cards-container">
         <div
           v-for="note in notes"
+          :key="note.id"
           class="card"
           :style="{ backgroundColor: note.backgroundColor }"
         >
@@ -150,6 +157,10 @@ header button {
   background-color: brown;
   margin-top: 7px;
 }
+
+.modal p {
+  color: brown;
+}
 </style>
 
 <!--
@@ -162,4 +173,8 @@ header button {
 
   Two way binding
   the action of 'Give and pull' between for example the state and a text area
- -->
+
+  v-for works as a for loop to iterate through arrays. So:
+  v-for="note in notes" creates an iteration and handles it all.
+
+-->
