@@ -1,16 +1,22 @@
+<script setup>
+import { ref } from "vue";
+
+const showModal = ref(false);
+</script>
+
 <template>
   <main>
-    <!-- <div class="overlay">
+    <div v-if="showModal" class="overlay">
       <div class="modal">
         <textarea name="note" id="note" cols="30" rows="10"></textarea>
         <button>ADD NOTE</button>
-        <button class="close">CLOSE</button>
+        <button @click="showModal = false" class="close">CLOSE</button>
       </div>
-    </div> -->
+    </div>
     <div class="container">
       <header>
         <h1>NOTES</h1>
-        <button>+</button>
+        <button @click="showModal = true">+</button>
       </header>
       <div class="cards-container">
         <div class="card">
@@ -122,3 +128,12 @@ header button {
   margin-top: 7px;
 }
 </style>
+
+<!--
+  NOTES:
+  Directives are instructions for VUE to do certain things.
+
+  v-if VS v-show
+  Show - The overlay div is displayed as display: none.
+  If - Works on a truthy value, like an if statement. (A little more common, but depends...)
+ -->
