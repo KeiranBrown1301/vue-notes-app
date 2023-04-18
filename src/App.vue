@@ -2,13 +2,20 @@
 import { ref } from "vue";
 
 const showModal = ref(false);
+const newNote = ref("");
 </script>
 
 <template>
   <main>
     <div v-if="showModal" class="overlay">
       <div class="modal">
-        <textarea name="note" id="note" cols="30" rows="10"></textarea>
+        <textarea
+          v-model="newNote"
+          name="note"
+          id="note"
+          cols="30"
+          rows="10"
+        ></textarea>
         <button>ADD NOTE</button>
         <button @click="showModal = false" class="close">CLOSE</button>
       </div>
@@ -136,4 +143,7 @@ header button {
   v-if VS v-show
   Show - The overlay div is displayed as display: none.
   If - Works on a truthy value, like an if statement. (A little more common, but depends...)
+
+  Two way binding
+  the action of 'Give and pull' between for example the state and a text area
  -->
